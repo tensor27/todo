@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geologica:wght@400;700&display=swap');
+html,
+body {
+	min-height: 100vh;
+	/* background-image: linear-gradient(135deg, #81fbb8 10%, #28c76fbd 100%); */
+	background-image: linear-gradient(
+		109.6deg,
+		rgba(102, 203, 149, 1) 11.2%,
+		rgba(39, 210, 175, 1) 98.7%
+	);
+}
+* {
+	font-family: 'Geologica', sans-serif;
+	border: none;
+
+	/* font-weight: 600; */
+}
+body {
+	background-color: #181818;
+	padding-top: 30px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+.card-header {
+	color: white;
+	font-size: 17px;
+}
+.card {
+	/* bg-dark */
+	background-image: linear-gradient(
+		109.6deg,
+		rgba(61, 131, 97, 1) 11.2%,
+		rgba(28, 103, 88, 1) 91.1%
+	);
+	border: none;
+}
+.btn-secondary {
+	color: white;
+}
+.heading__one {
+	text-align: center;
+	font-size: 55px;
+	font-family: 'Work Sans', sans-serif;
+}
+.list-group li {
+	font-size: 20px;
+	background: #474c5200;
+	border: 0.1px solid rgba(0, 0, 0, 0.08);
+	color: white;
+}
+
+.aside {
+	height: 400px;
+}
+.main {
+	height: 400px;
+}
+.d-flex {
+	display: flex;
+}
+.task-title {
+	padding-top: 5px;
+}
+.gray {
+	color: #bdbdbd;
+}
+
+.task-title--done {
+	text-decoration: line-through;
+	color: #212529b5;
+}
+.task-item__buttons {
+	display: flex;
+	column-gap: 5px;
+}
+
+.leaf {
+	margin: 0 auto;
+}
+
+.notify-holder {
+	height: 60px;
+	margin-bottom: 20px;
+}
+.empty-list {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding-top: 1em;
+	padding-bottom: 1em;
+}
+.empty-list__title {
+	color: white;
+	font-size: 28px;
+	margin-bottom: 15px;
+}
+.empty-list__icon {
+	color: #42be2a;
+	font-size: 32px;
+}
+.btn-action {
+	background-color: #e0e5ea;
+
+	padding: 8px 10px;
+	cursor: pointer;
+	border: 0;
+	border-radius: 4px;
+	transition: opacity 0.2s ease-in;
+	opacity: 0.5;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.btn-action:hover {
+	background-color: #e0e5ea;
+	opacity: 1;
+}
+
+.btn-action img {
+	pointer-events: none;
+}
+
+.none {
+	display: none !important;
+}
+
+.float-right {
+	float: right;
+}
+
+.btn {
+	background: rgba(208, 255, 231, 0.585);
+}
