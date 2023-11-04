@@ -2,8 +2,13 @@ const form = document.querySelector('#form')
 const taskInput = document.querySelector('#taskInput')
 const tasksList = document.querySelector('#tasksList')
 const emptyListTitle = document.querySelector('#emptyListTitle')
+const themeButton = document.querySelector('#themeButton')
+const themeMenu = document.querySelector('#themeMenu')
+const themeContainer = document.querySelector('.theme__container')
+const body = document.body
+const card = document.querySelectorAll('.card')
 
-let tasks = [] //создаём массив, кодорый содержит объекты-таски
+let tasks = []
 if (localStorage.getItem('tasks')) {
 	tasks = JSON.parse(localStorage.getItem('tasks'))
 }
@@ -16,17 +21,15 @@ tasksList.addEventListener('click', doneTask)
 checkEmptyList()
 
 function addTask(event) {
-
 	const someTask = taskInput.value
 
-	//создаём объект, содержащий id, текст и статус выполнения
 	const newTask = {
 		id: Date.now(),
 		text: someTask,
 		done: false,
 	}
 
-	tasks.push(newTask) // пушим объект в массив
+	tasks.push(newTask)
 
 	event.preventDefault()
 
@@ -36,7 +39,6 @@ function addTask(event) {
 	taskInput.focus()
 	saveToLS()
 	checkEmptyList()
-
 }
 
 function deleteTask(event) {
@@ -44,28 +46,8 @@ function deleteTask(event) {
 
 	const currentNode = event.target.closest('li')
 
-	/*чтобы идентифицировать элемент списка, который мы хотим удалить,
-	создадим переменную, куда запишем id удаляемого li*/
-
-	const nodeId = Number(currentNode.id) // возвращает длинный айди
-
-	/* Создадим переменную, куда запишется индекс элемента массива, который содержит в себе nodeId. Это делается, чтобы удалить из массива объект, который содержит в себе nodeId. */
-
-	// __________________________________________________
-
-	//Способ 1
-	// const index = tasks.findIndex(el => {
-	// 	if (el.id === nodeId) return true
-	// })
-	// /*index содержит в себе индекс объекта (в массиве), содержащий в себе nodeId*/
-
-	// tasks.splice(index, 1) /*Удаление в массиве элементов, начиная с
-	// индекса index, после этого индекса удаляется 1 элемент */
-	// __________________________________________________
-
-	//Способ 2
-	tasks = tasks.filter(task => task.id !== nodeId) /*т.е тут в массив
-	попадают только те элементы, у которых task.id не равен nodeId */
+	const nodeId = Number(currentNode.id)
+	tasks = tasks.filter(task => task.id !== nodeId)
 
 	currentNode.remove()
 	saveToLS()
@@ -96,7 +78,7 @@ function checkEmptyList() {
 		tasksList.insertAdjacentHTML('beforeend', emptyListHTML)
 	}
 
-	//ниже код для избежания ошибок
+	//для избежания ошибок
 	if (tasks.length > 0) {
 		const emptyListHtmlDeleted = document.querySelector('#emptyList')
 		emptyListHtmlDeleted ? emptyListHtmlDeleted.remove() : null
@@ -123,3 +105,50 @@ function renderTask(task) {
 
 	tasksList.insertAdjacentHTML('beforeend', taskHtml)
 }
+
+themeButton.addEventListener('click', () => {
+	themeMenu.classList.toggle('open')
+})
+
+// changing the theme color
+
+const themeGradients = {
+	green: {
+		body: 'linear-gradient(109.6deg, rgba(102, 203, 149, 1) 11.2%, rgba(39, 210, 175, 1) 98.7%)',
+		card: 'linear-gradient( 109.6deg, rgba(61, 131, 97, 1) 11.2%, rgba(28, 103, 88, 1) 91.1% )',
+	},
+	purple: {
+		body: 'linear-gradient(83.2deg, rgba(150, 93, 233, 1) 10.8%, rgba(99,88,238,0.78) 94.3%)',
+		card: 'linear-gradient(83.2deg, rgb(136, 83, 215) 10.8%, rgb(82, 75, 188) 94.3%)',
+	},
+	blue: {
+		body: 'linear-gradient(109.6deg, rgba(39, 142, 255, 1) 11.2%, rgba(98, 124, 255, 0.78) 100.2%)',
+		card: 'linear-gradient(109.6deg, rgb(45, 131, 224) 11.2%, rgba(57, 104, 235, 0.78) 100.2%)',
+	},
+	gray: {
+		body: 'linear-gradient(110.3deg, rgb(122, 144, 163) 4.3%, rgb(92, 99, 127) 96.7%)',
+		card: 'linear-gradient(110.3deg, rgb(91, 107, 120) 4.3%, rgb(59, 64, 83) 96.7%)',
+	},
+}
+
+const savedTheme = localStorage.getItem('selectedTheme')
+
+function setTheme(themeId) {
+	const theme = themeGradients[themeId]
+	body.style.backgroundImage = theme.body
+	card.forEach(card => {
+		card.style.backgroundImage = theme.card
+	})
+	localStorage.setItem('selectedTheme', themeId)
+}
+
+if (savedTheme && themeGradients[savedTheme]) {
+	setTheme(savedTheme)
+}
+
+themeMenu.addEventListener('click', event => {
+	const themeId = event.target.id
+	if (themeGradients[themeId]) {
+		setTheme(themeId)
+	}
+})
