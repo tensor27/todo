@@ -10,10 +10,20 @@
 	<title>todo</title>
 </head>
 
-<body>
+<body class='body'>
 
 	<div class="container">
-
+		<div class="theme__container">
+			<button id='themeButton' class='header__themes-btn'>
+				<span class="btn-element"><img src="img/theme.png" alt="theme"></span>
+			</button>
+			<div id='themeMenu' class="themes">
+				<span id='green'>Green</span>
+				<span id='purple'>Purple</span>
+				<span id='blue'>Blue</span>
+				<span id='gray'>Gray</span>
+			</div>
+		</div>
 		<h1 class='heading__one'>todo</h1>
 		<!-- <div class="">ToDo</div> -->
 
@@ -21,15 +31,13 @@
 		<div class="card mb-4">
 			<img src="./img/leaf.svg" alt="Empty" width="48" class="mt-3 mb-3 leaf">
 			<ul id="tasksList" class="list-group list-group-flush">
-				<!-- <li id="emptyList" class="list-group-item empty-list">
-					<div id='emptyListTitle' class="empty-list__title ">Список дел пуст</div>
-				</li> -->
+
 			</ul>
 		</div>
 		<!-- //List of tasks -->
 
 		<!-- Form -->
-		<div class="card bg-dark">
+		<div class="card">
 			<div class="card-header">Добавить новую задачу</div>
 			<div class="card-body">
 				<form id="form">
