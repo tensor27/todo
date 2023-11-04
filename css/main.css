@@ -1,34 +1,70 @@
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Geologica:wght@400;700&display=swap');
-html,
+
+* {
+	font-family: 'Geologica', sans-serif;
+	border: none;
+}
 body {
 	min-height: 100vh;
-	/* background-image: linear-gradient(135deg, #81fbb8 10%, #28c76fbd 100%); */
+
 	background-image: linear-gradient(
 		109.6deg,
 		rgba(102, 203, 149, 1) 11.2%,
 		rgba(39, 210, 175, 1) 98.7%
 	);
-}
-* {
-	font-family: 'Geologica', sans-serif;
-	border: none;
-
-	/* font-weight: 600; */
-}
-body {
-	background-color: #181818;
 	padding-top: 30px;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 }
-.card-header {
-	color: white;
-	font-size: 17px;
+
+.theme__container {
+	display: flex;
+	gap: 10px;
+	align-content: center;
 }
+
+.header__themes-btn {
+	display: flex;
+	width: 35px;
+	height: 35px;
+	border-radius: 10px;
+	box-sizing: border-box;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(255, 255, 255, 0.548);
+}
+
+.header__themes-btn span img {
+	width: 30px;
+}
+.header__themes-btn:hover {
+	cursor: pointer;
+}
+
+.themes {
+	font-weight: bold;
+	align-items: center;
+	gap: 15px;
+	opacity: 0;
+	display: flex;
+	transform: scaleX(0);
+	transform-origin: left;
+	transition: opacity 0.3s, transform 0.3s;
+}
+
+.themes.open {
+	opacity: 1;
+	transition: all 0.3s ease;
+	transform: scaleX(1);
+}
+
+.themes span {
+	cursor: pointer;
+}
+
 .card {
-	/* bg-dark */
 	background-image: linear-gradient(
 		109.6deg,
 		rgba(61, 131, 97, 1) 11.2%,
@@ -36,9 +72,11 @@ body {
 	);
 	border: none;
 }
-.btn-secondary {
+
+.card-header {
 	color: white;
 }
+
 .heading__one {
 	text-align: center;
 	font-size: 55px;
@@ -51,18 +89,6 @@ body {
 	color: white;
 }
 
-.aside {
-	height: 400px;
-}
-.main {
-	height: 400px;
-}
-.d-flex {
-	display: flex;
-}
-.task-title {
-	padding-top: 5px;
-}
 .gray {
 	color: #bdbdbd;
 }
@@ -80,10 +106,6 @@ body {
 	margin: 0 auto;
 }
 
-.notify-holder {
-	height: 60px;
-	margin-bottom: 20px;
-}
 .empty-list {
 	display: flex;
 	flex-direction: column;
@@ -97,13 +119,9 @@ body {
 	font-size: 28px;
 	margin-bottom: 15px;
 }
-.empty-list__icon {
-	color: #42be2a;
-	font-size: 32px;
-}
+
 .btn-action {
 	background-color: #e0e5ea;
-
 	padding: 8px 10px;
 	cursor: pointer;
 	border: 0;
@@ -128,10 +146,7 @@ body {
 	display: none !important;
 }
 
-.float-right {
-	float: right;
-}
-
 .btn {
-	background: rgba(208, 255, 231, 0.585);
+	color: white;
+	background-color: rgba(0, 0, 0, 0.285);
 }
