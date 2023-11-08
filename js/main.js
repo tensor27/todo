@@ -1,12 +1,14 @@
-const form = document.querySelector('#form')
-const taskInput = document.querySelector('#taskInput')
-const tasksList = document.querySelector('#tasksList')
-const emptyListTitle = document.querySelector('#emptyListTitle')
-const themeButton = document.querySelector('#themeButton')
-const themeMenu = document.querySelector('#themeMenu')
-const themeContainer = document.querySelector('.theme__container')
+const form = document.getElementById('form')
+const taskInput = document.getElementById('taskInput')
+const tasksList = document.getElementById('tasksList')
+const emptyListTitle = document.getElementById('#emptyListTitle')
+const themeButton = document.getElementById('themeButton')
+const themeMenu = document.getElementById('themeMenu')
+const themeContainer = document.getElementById('themesId')
 const body = document.body
-const card = document.querySelectorAll('.card')
+// const card = document.querySelectorAll('.card')
+const cardTop = document.getElementById('cardTop')
+const cardBottom = document.getElementById('cardBottom')
 
 let tasks = []
 if (localStorage.getItem('tasks')) {
@@ -19,6 +21,11 @@ form.addEventListener('submit', addTask)
 tasksList.addEventListener('click', deleteTask)
 tasksList.addEventListener('click', doneTask)
 checkEmptyList()
+
+if (!tasks || tasks.length===0) {
+	tasksList.removeEventListener('click', deleteTask)
+	tasksList.removeEventListener('click', doneTask)
+}
 
 function addTask(event) {
 	const someTask = taskInput.value
@@ -43,6 +50,7 @@ function addTask(event) {
 
 function deleteTask(event) {
 	if (event.target.dataset.action !== 'delete') return
+	console.log(event.target)
 
 	const currentNode = event.target.closest('li')
 
@@ -136,9 +144,10 @@ const savedTheme = localStorage.getItem('selectedTheme')
 function setTheme(themeId) {
 	const theme = themeGradients[themeId]
 	body.style.backgroundImage = theme.body
-	card.forEach(card => {
-		card.style.backgroundImage = theme.card
-	})
+	// card.forEach(card => {
+	// 	card.style.backgroundImage = theme.card
+	// })
+	cardTop.style.backgroundImage = cardBottom.style.backgroundImage = theme.card
 	localStorage.setItem('selectedTheme', themeId)
 }
 
