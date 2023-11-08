@@ -1,28 +1,41 @@
-const form = document.querySelector('#form')
-const taskInput = document.querySelector('#taskInput')
-const tasksList = document.querySelector('#tasksList')
-const emptyListTitle = document.querySelector('#emptyListTitle')
-const themeButton = document.querySelector('#themeButton')
-const themeMenu = document.querySelector('#themeMenu')
-const themeContainer = document.querySelector('.theme__container')
+const form = document.getElementById('form')
+const taskInput = document.getElementById('taskInput')
+const tasksList = document.getElementById('tasksList')
+const emptyListTitle = document.getElementById('#emptyListTitle')
+const themeButton = document.getElementById('themeButton')
+const themeMenu = document.getElementById('themeMenu')
+const themeContainer = document.getElementById('themesId')
 const body = document.body
-const card = document.querySelectorAll('.card')
+// const card = document.querySelectorAll('.card')
+const cardTop = document.getElementById('cardTop')
+const cardBottom = document.getElementById('cardBottom')
 
 let tasks = []
 if (localStorage.getItem('tasks')) {
 	tasks = JSON.parse(localStorage.getItem('tasks'))
 }
 
-tasks.forEach(task => renderTask(task))
+//удаление слушателей событий в случае отсутствия тасков
+if (!tasks || tasks.length === 0) {
+	tasksList.removeEventListener('click', handleTaskClick)
+}
 
+tasks.forEach(task => renderTask(task))
 form.addEventListener('submit', addTask)
-tasksList.addEventListener('click', deleteTask)
-tasksList.addEventListener('click', doneTask)
+tasksList.addEventListener('click', handleTaskClick)
 checkEmptyList()
+
+function handleTaskClick(event) {
+	if (event.target.dataset.action === 'delete') {
+		deleteTask(event)
+	}
+	if (event.target.dataset.action === 'done') {
+		doneTask(event)
+	}
+}
 
 function addTask(event) {
 	const someTask = taskInput.value
-
 	const newTask = {
 		id: Date.now(),
 		text: someTask,
@@ -42,11 +55,10 @@ function addTask(event) {
 }
 
 function deleteTask(event) {
-	if (event.target.dataset.action !== 'delete') return
-
 	const currentNode = event.target.closest('li')
 
 	const nodeId = Number(currentNode.id)
+
 	tasks = tasks.filter(task => task.id !== nodeId)
 
 	currentNode.remove()
@@ -55,7 +67,6 @@ function deleteTask(event) {
 }
 
 function doneTask(event) {
-	if (event.target.dataset.action !== 'done') return
 	const currentNode = event.target.closest('li')
 	const spanTitle = currentNode.querySelector('.task-title')
 	spanTitle.classList.toggle('task-title--done')
@@ -106,11 +117,11 @@ function renderTask(task) {
 	tasksList.insertAdjacentHTML('beforeend', taskHtml)
 }
 
+// changing the theme color
+
 themeButton.addEventListener('click', () => {
 	themeMenu.classList.toggle('open')
 })
-
-// changing the theme color
 
 const themeGradients = {
 	green: {
@@ -136,9 +147,10 @@ const savedTheme = localStorage.getItem('selectedTheme')
 function setTheme(themeId) {
 	const theme = themeGradients[themeId]
 	body.style.backgroundImage = theme.body
-	card.forEach(card => {
-		card.style.backgroundImage = theme.card
-	})
+	// card.forEach(card => {
+	// 	card.style.backgroundImage = theme.card
+	// })
+	cardTop.style.backgroundImage = cardBottom.style.backgroundImage = theme.card
 	localStorage.setItem('selectedTheme', themeId)
 }
 
