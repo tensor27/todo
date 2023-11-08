@@ -15,21 +15,27 @@ if (localStorage.getItem('tasks')) {
 	tasks = JSON.parse(localStorage.getItem('tasks'))
 }
 
-tasks.forEach(task => renderTask(task))
+//удаление слушателей событий в случае отсутствия тасков
+if (!tasks || tasks.length === 0) {
+	tasksList.removeEventListener('click', handleTaskClick)
+}
 
+tasks.forEach(task => renderTask(task))
 form.addEventListener('submit', addTask)
-tasksList.addEventListener('click', deleteTask)
-tasksList.addEventListener('click', doneTask)
+tasksList.addEventListener('click', handleTaskClick)
 checkEmptyList()
 
-if (!tasks || tasks.length===0) {
-	tasksList.removeEventListener('click', deleteTask)
-	tasksList.removeEventListener('click', doneTask)
+function handleTaskClick(event) {
+	if (event.target.dataset.action === 'delete') {
+		deleteTask(event)
+	}
+	if (event.target.dataset.action === 'done') {
+		doneTask(event)
+	}
 }
 
 function addTask(event) {
 	const someTask = taskInput.value
-
 	const newTask = {
 		id: Date.now(),
 		text: someTask,
@@ -49,12 +55,10 @@ function addTask(event) {
 }
 
 function deleteTask(event) {
-	if (event.target.dataset.action !== 'delete') return
-	console.log(event.target)
-
 	const currentNode = event.target.closest('li')
 
 	const nodeId = Number(currentNode.id)
+
 	tasks = tasks.filter(task => task.id !== nodeId)
 
 	currentNode.remove()
@@ -63,7 +67,6 @@ function deleteTask(event) {
 }
 
 function doneTask(event) {
-	if (event.target.dataset.action !== 'done') return
 	const currentNode = event.target.closest('li')
 	const spanTitle = currentNode.querySelector('.task-title')
 	spanTitle.classList.toggle('task-title--done')
@@ -114,11 +117,11 @@ function renderTask(task) {
 	tasksList.insertAdjacentHTML('beforeend', taskHtml)
 }
 
+// changing the theme color
+
 themeButton.addEventListener('click', () => {
 	themeMenu.classList.toggle('open')
 })
-
-// changing the theme color
 
 const themeGradients = {
 	green: {
